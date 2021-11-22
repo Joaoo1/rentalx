@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
+import 'dotenv/config';
 import express from 'express';
 
 const app = express();
 
-app.get('/', (req, res) => res.json({ok: true}));
+app.get('/', (req, res) => res.json({ ok: true }));
 
-app.listen(3333, () => {
-  console.log('Server listen on 3333');
-})
+app.listen(process.env.PORT, () => {
+  console.log(`Server listen on ${process.env.PORT}`);
+});
