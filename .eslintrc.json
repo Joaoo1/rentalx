@@ -70,7 +70,8 @@
                     "**/*.spec.js"
                 ]
             }
-        ]
+        ],
+        "no-useless-constructor": "off"
     },
     "settings": {
         "import/resolver": {
