@@ -1,14 +1,14 @@
-import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
-interface ICreateCategoryServiceParams {
+interface ICreateCategoryUseCaseParams {
   name: string;
   description: string;
 }
 
-class CreateCategoryService {
+class CreateCategoryUseCase {
   constructor(private categoriesRepository: ICategoriesRepository) {}
 
-  async execute({ name, description }: ICreateCategoryServiceParams) {
+  async execute({ name, description }: ICreateCategoryUseCaseParams) {
     const categoryAlreadyExists = this.categoriesRepository.findByName(name);
     if (categoryAlreadyExists) {
       throw new Error('Categoria já existe');
@@ -18,4 +18,4 @@ class CreateCategoryService {
   }
 }
 
-export { CreateCategoryService };
+export { CreateCategoryUseCase };

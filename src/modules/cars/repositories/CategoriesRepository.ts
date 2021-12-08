@@ -11,10 +11,6 @@ class CategoriesRepository implements ICategoriesRepository {
     this.categories = [];
   }
 
-  list(): Category[] {
-    throw new Error('Method not implemented.');
-  }
-
   create({ name, description }: ICreateCategoryDto): void {
     const category = new Category();
 
