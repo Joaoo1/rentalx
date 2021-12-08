@@ -1,15 +1,18 @@
 import { Category } from '../models/Category';
+import {
+  ICategoriesRepository,
+  ICreateCategoryDto,
+} from './ICategoriesRepository';
 
-interface ICreateCategoryDto {
-  name: string;
-  description: string;
-}
-
-class CategoriesRepository {
+class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
 
   constructor() {
     this.categories = [];
+  }
+
+  list(): Category[] {
+    throw new Error('Method not implemented.');
   }
 
   create({ name, description }: ICreateCategoryDto): void {
