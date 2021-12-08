@@ -7,18 +7,24 @@ import {
 class SpecificationsRepository implements ISpecificationsRepository {
   private specifations: Specification[];
 
-  constructor() {
+  private static INSTANCE: SpecificationsRepository;
+
+  private constructor() {
     this.specifations = [];
+  }
+
+  public static getInstance(): SpecificationsRepository {
+    if (!SpecificationsRepository.INSTANCE) {
+      SpecificationsRepository.INSTANCE = new SpecificationsRepository();
+    }
+
+    return SpecificationsRepository.INSTANCE;
   }
 
   findByName(name: string): Specification | undefined {
     const foundSpecification = this.specifations.find(s => s.name === name);
     return foundSpecification;
   }
-
-  // list(): Specification[] {
-  //   throw new Error('Method not implemented.');
-  // }
 
   create({ name, description }: ICreateSpecificationDto): void {
     const specification = new Specification();
