@@ -13,7 +13,8 @@ services:
       - POSTGRES_DB=rentx
     volumes:
       - pgdata:/data/postgres
-    network_mode: host
+    networks:
+      - rentx
       
   app:
     build: .
@@ -22,8 +23,12 @@ services:
       - 3333:3333
     volumes:
       - .:/usr/app
-    network_mode: host
+    networks:
+      - rentx
 
 volumes:
   pgdata: 
     driver: local
+
+networks:
+  rentx:
