@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface ICreateCategoryUseCaseParams {
@@ -5,11 +7,21 @@ interface ICreateCategoryUseCaseParams {
   description: string;
 }
 
+@injectable()
 class CreateCategoryUseCase {
-  constructor(private categoriesRepository: ICategoriesRepository) {}
+  constructor(
+    @inject('CategoriesRepository')
+    private categoriesRepository: ICategoriesRepository
+  ) {}
 
-  async execute({ name, description }: ICreateCategoryUseCaseParams) {
-    const categoryAlreadyExists = this.categoriesRepository.findByName(name);
+  async execute({
+    name,
+    description,
+  }: ICreateCategoryUseCaseParams): Promise<void> {
+    const categoryAlreadyExists = await this.categoriesRepository.findByName(
+      name
+    );
+
     if (categoryAlreadyExists) {
       throw new Error('Categoria já existe');
     }
