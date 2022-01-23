@@ -1,4 +1,4 @@
-import { NextFunction, Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
 import { AppError } from '../errors/AppError';
@@ -31,6 +31,10 @@ export async function ensureAuthenticated(
     if (!user) {
       throw new AppError('User does not exists', 401);
     }
+
+    request.user = {
+      id: userId,
+    };
 
     next();
   } catch {
