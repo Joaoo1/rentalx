@@ -50,16 +50,16 @@
             {
                 "newlinesBetween": "always",
                 "groups": [
-                    "module",
-                    "/^@shared/",
+                    "module", 
                     [
+                        "/^@/",
                         "parent",
                         "sibling",
                         "index"
                     ]
                 ],
                 "alphabetize": {
-                    "order": "asc",
+                    "order": "ignore",
                     "ignoreCase": true
                 }
             }

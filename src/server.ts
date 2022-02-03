@@ -8,7 +8,7 @@ import './shared/container';
 
 import 'express-async-errors';
 
-import swaggerFile from './config/swagger.json';
+import swaggerFile from '@config/swagger.json';
 import { expectionHandler } from './middlewares/exceptionHandler';
 import { router } from './routes';
 
