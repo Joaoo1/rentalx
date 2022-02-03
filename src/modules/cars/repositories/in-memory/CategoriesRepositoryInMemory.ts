@@ -12,7 +12,7 @@ class CategoriesRepositoryInMemory implements ICategoriesRepository {
   }
 
   async findAll(): Promise<Category[]> {
-    throw this.catetories;
+    return this.catetories;
   }
 
   async create({ name, description }: ICreateCategoryDto): Promise<void> {
