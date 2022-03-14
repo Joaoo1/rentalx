@@ -13,7 +13,7 @@ import swaggerFile from '@config/swagger.json';
 import { expectionHandler } from './middlewares/exceptionHandler';
 import { router } from './routes';
 
-createConnection();
+createConnection().then(con => console.log(con));
 
 const app = express();
 

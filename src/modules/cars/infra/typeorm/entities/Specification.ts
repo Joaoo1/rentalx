@@ -4,16 +4,16 @@ import { v4 as uuid } from 'uuid';
 @Entity('specifications')
 class Specification {
   @PrimaryColumn()
-  id?: string;
+  id!: string;
 
   @Column()
-  name?: string;
+  name!: string;
 
   @Column()
-  description?: string;
+  description!: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt?: Date;
+  createdAt!: Date;
 
   constructor() {
     if (!this.id) {

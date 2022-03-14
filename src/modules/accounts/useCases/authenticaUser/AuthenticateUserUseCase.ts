@@ -22,7 +22,7 @@ interface IResponse {
 class AuthenticateUserUseCase {
   constructor(
     @inject('UsersRepository')
-    private readonly usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
