@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import { AppError } from '@shared/errors/AppError';
 
-export async function expectionHandler(
+export async function exceptionHandler(
   error: Error,
   request: Request,
   response: Response,
