@@ -48,6 +48,15 @@ class CarsRepository implements ICarsRepository {
 
     return carsQuery.getMany();
   }
+
+  async updateAvailable(id: string, available: boolean): Promise<Car> {
+    const car = await this.repository.findOne(id);
+
+    return this.repository.save({
+      ...car,
+      available,
+    });
+  }
 }
 
 export { CarsRepository };

@@ -10,6 +10,7 @@ interface ICarsRepository {
     categoryId?: string,
     name?: string
   ): Promise<Car[]>;
+  updateAvailable(id: string, available: boolean): Promise<Car>;
 }
 
 export { ICarsRepository };
