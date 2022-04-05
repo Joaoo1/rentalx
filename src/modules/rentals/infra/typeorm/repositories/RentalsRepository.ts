@@ -40,6 +40,13 @@ class RentalsRepository implements IRentalsRepository {
 
     return rental;
   }
+
+  findAllByUser(userId: string): Promise<Rental[]> {
+    return this.repository.find({
+      where: { userId },
+      relations: ['car'],
+    });
+  }
 }
 
 export { RentalsRepository };
