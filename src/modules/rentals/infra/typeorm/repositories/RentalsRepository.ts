@@ -11,12 +11,26 @@ class RentalsRepository implements IRentalsRepository {
     this.repository = getRepository(Rental);
   }
 
+  findById(rentalId: string): Promise<Rental | undefined> {
+    return this.repository.findOne(rentalId);
+  }
+
   findOpenRentalByCar(carId: string): Promise<Rental | undefined> {
-    return this.repository.findOne(carId);
+    return this.repository.findOne({
+      where: {
+        carId,
+        endDate: null,
+      },
+    });
   }
 
   findOpenRentalByUser(userId: string): Promise<Rental | undefined> {
-    return this.repository.findOne({ userId });
+    return this.repository.findOne({
+      where: {
+        userId,
+        endDate: null,
+      },
+    });
   }
 
   async create(data: ICreateRentalDTO): Promise<Rental> {
