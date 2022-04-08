@@ -38,7 +38,7 @@ describe('ListCategoriesController', () => {
     const { token } = responseToken.body;
 
     await request(app)
-      .get('/categories')
+      .post('/categories')
       .send({
         name: 'Category super test',
         description: 'Category super test',

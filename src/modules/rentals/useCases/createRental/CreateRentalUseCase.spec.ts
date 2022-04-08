@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import dayjs from 'dayjs';
+import { randomUUID } from 'node:crypto';
 
 import { RentalsRepositoryInMemory } from '@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory';
 import { AppError } from '@shared/errors/AppError';
@@ -27,9 +28,19 @@ describe('CreateRentalUseCase', () => {
   });
 
   it('should be able to create a new rental', async () => {
+    const car = await carsRepositoryInMemory.create({
+      name: 'test',
+      brand: 'test',
+      description: 'test',
+      dailyRate: 100,
+      licensePlate: 'test',
+      categoryId: 'test',
+      fineAmount: 40,
+    });
+
     const rental = await createRentalUseCase.execute({
-      userId: '',
-      carId: '',
+      userId: '12345',
+      carId: car.id,
       expectedReturnDate: tomorrow,
     });
 
@@ -40,16 +51,38 @@ describe('CreateRentalUseCase', () => {
   it('should not be able to create a new rental if there is another in progress', async () => {
     expect.assertions(1);
 
+    const car1 = await carsRepositoryInMemory.create({
+      name: 'test',
+      brand: 'test',
+      description: 'test',
+      dailyRate: 100,
+      licensePlate: 'test',
+      categoryId: 'test',
+      fineAmount: 40,
+    });
+
+    const car2 = await carsRepositoryInMemory.create({
+      name: 'test',
+      brand: 'test',
+      description: 'test',
+      dailyRate: 100,
+      licensePlate: 'test',
+      categoryId: 'test',
+      fineAmount: 40,
+    });
+
+    const userId = randomUUID();
+
     await createRentalUseCase.execute({
-      userId: '12345',
-      carId: 'AA',
+      userId,
+      carId: car1.id,
       expectedReturnDate: tomorrow,
     });
 
     try {
       await createRentalUseCase.execute({
-        userId: '12345',
-        carId: 'BB',
+        userId,
+        carId: car2.id,
         expectedReturnDate: tomorrow,
       });
     } catch (err) {
@@ -60,16 +93,26 @@ describe('CreateRentalUseCase', () => {
   it('should not be able to create a new rental if there the is car is already rented', async () => {
     expect.assertions(1);
 
+    const car = await carsRepositoryInMemory.create({
+      name: 'test',
+      brand: 'test',
+      description: 'test',
+      dailyRate: 100,
+      licensePlate: 'test',
+      categoryId: 'test',
+      fineAmount: 40,
+    });
+
     await createRentalUseCase.execute({
-      userId: '12345',
-      carId: 'AAA',
+      userId: randomUUID(),
+      carId: car.id,
       expectedReturnDate: tomorrow,
     });
 
     try {
       await createRentalUseCase.execute({
-        userId: '11111',
-        carId: 'AAA',
+        userId: randomUUID(),
+        carId: car.id,
         expectedReturnDate: tomorrow,
       });
     } catch (err) {
@@ -84,7 +127,7 @@ describe('CreateRentalUseCase', () => {
       await createRentalUseCase.execute({
         userId: '11111',
         carId: 'AAA',
-        expectedReturnDate: dayjs().toDate(),
+        expectedReturnDate: dayJsDateProvider.dateNow(),
       });
     } catch (err) {
       expect(err).toBeInstanceOf(AppError);
