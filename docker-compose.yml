@@ -19,6 +19,7 @@ services:
   app:
     build: .
     container_name: rentx
+    entrypoint: ./.docker/entrypoint.sh
     ports:
       - 3333:3333
     volumes:
