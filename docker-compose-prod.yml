@@ -3,13 +3,13 @@ version: "3.7"
 services:
   database_ignite:
     image: postgres
-    container_name: database_ignite
-    restart: always
+    container_name: database_rentx
+    restart: unless-stopped
     ports: 
-      - 5432:5432
+      - 65432:5432
     environment:
       - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=ignite
+      - POSTGRES_PASSWORD=km*I941Y2GTgF0#AJQs^Z*$x&B
       - POSTGRES_DB=rentx
     volumes:
       - pgdata:/data/postgres
@@ -19,14 +19,13 @@ services:
   app:
     build: .
     container_name: rentx
-    entrypoint: ./.docker/entrypoint.sh
+    entrypoint: ./.docker/entrypoint-prod.sh
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     ports:
       - 3333:3333
     volumes:
       - .:/usr/app
-      - /usr/app/node_modules
     networks:
       - rentx
 
