@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  database_ignite:
+  database_rentx:
     image: postgres
     container_name: database_rentx
     restart: unless-stopped
@@ -17,7 +17,9 @@ services:
       - rentx
       
   app:
-    build: .
+    build: 
+      context: .
+      dockerfile: ./Dockerfile-prod 
     container_name: rentx
     entrypoint: ./.docker/entrypoint-prod.sh
     env_file:
@@ -28,6 +30,8 @@ services:
       - .:/usr/app
     networks:
       - rentx
+    depends_on:
+      - database_rentx
 
 volumes:
   pgdata: 
