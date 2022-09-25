@@ -2,11 +2,6 @@ FROM node
 
 WORKDIR /usr/app
 
-COPY package.json ./
-RUN yarn
-
 COPY . .
 
-RUN chmod +x ./.docker/entrypoint-prod.sh
-
-RUN yarn build
+RUN yarn && yarn build

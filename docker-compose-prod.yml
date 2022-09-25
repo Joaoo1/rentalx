@@ -5,36 +5,35 @@ services:
     image: postgres
     container_name: database_rentx
     restart: unless-stopped
-    ports: 
-      - 65432:5432
+    ports:
+      - 6432:5432
     environment:
       - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=km*I941Y2GTgF0#AJQs^Z*$x&B
+      - POSTGRES_PASSWORD=rentalx
       - POSTGRES_DB=rentx
     volumes:
       - pgdata:/data/postgres
     networks:
       - rentx
-      
+
   app:
-    build: 
+    build:
       context: .
-      dockerfile: ./Dockerfile-prod 
+      dockerfile: ./Dockerfile-prod
     container_name: rentx
+    restart: unless-stopped
     entrypoint: ./.docker/entrypoint-prod.sh
     env_file:
       - ./.env.prod
     ports:
       - 3333:3333
-    volumes:
-      - .:/usr/app
     networks:
       - rentx
     depends_on:
       - database_rentx
 
 volumes:
-  pgdata: 
+  pgdata:
     driver: local
 
 networks:
